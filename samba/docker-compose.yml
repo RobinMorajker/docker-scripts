@@ -1,0 +1,19 @@
+version: "3"
+services:
+  samba:
+    image: dockurr/samba
+    container_name: samba
+    environment:
+      USER: "robin"
+      PASS: "SmokinMaskRobin3#"
+      RW: true      # Optional, default true
+      UID: 1000    # Optional, default 1000
+      GID: 1000    # Optional, default 1000
+    ports:
+      - 445:445
+    volumes:
+      - /:/
+      -/home/robin:/home/robin
+   cap_add:
+   - CAP_NET_ADMIN
+    restart: on-failure
