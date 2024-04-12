@@ -15,5 +15,5 @@ services:
       - /:/
       - /home/robin:/home/robin
    cap_add:
-   - CAP_NET_ADMIN
-    restart: on-failure
+      - CAP_NET_ADMIN
+   restart: on-failure
