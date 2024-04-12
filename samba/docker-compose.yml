@@ -4,7 +4,7 @@ services:
     image: dockurr/samba
     container_name: samba
     environment:
-      USER: "robin"
+      USER: "robinmorajker"
       PASS: "SmokinMaskRobin3#"
       RW: true      # Optional, default true
       UID: 1000    # Optional, default 1000
