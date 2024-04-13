@@ -1,0 +1,91 @@
+name: linuxserver-mariadb
+services:
+  app:
+    cpu_shares: 90
+    command: []
+    deploy:
+      resources:
+        limits:
+          memory: 8052M
+    environment:
+      - MYSQL_DATABASE=nextcloud_db
+      - MYSQL_PASSWORD=SmokinMaskRobin3#
+      - MYSQL_ROOT_PASSWORD=SmokinMaskRobin3#
+      - MYSQL_USER=nextcloud_user
+      - PGID=1000
+      - PUID=1000
+      - REMOTE_SQL=
+      - TZ=Asia/Kolkata
+    image: linuxserver/mariadb:10.11.6
+    labels:
+      icon: https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/mariadb-git.png
+    ports:
+      - target: 3306
+        published: "3307"
+        protocol: tcp
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /DATA/AppData/mariadb/config
+        target: /config
+    x-casaos:
+      envs:
+        - container: PUID
+          description:
+            en_us: for UserID
+        - container: PGID
+          description:
+            en_us: for GroupID
+        - container: TZ
+          description:
+            en_us: specify a timezone to use, see this list.
+        - container: MYSQL_ROOT_PASSWORD
+          description:
+            en_us: Set this to root password for installation (minimum 4 characters &
+              non-alphanumeric passwords must be properly escaped).
+        - container: MYSQL_DATABASE
+          description:
+            en_us: Specify the name of a database to be created on image startup.
+        - container: MYSQL_USER
+          description:
+            en_us: This user will have superuser access to the database specified by
+              MYSQL_DATABASE (do not use root here).
+        - container: MYSQL_PASSWORD
+          description:
+            en_us: Set this to the password you want to use for you MYSQL_USER (minimum 4
+              characters & non-alphanumeric passwords must be properly escaped).
+        - container: REMOTE_SQL
+          description:
+            en_us: Set this to ingest sql files from an http/https endpoint (comma seperated
+              array).
+    devices: []
+    cap_add: []
+    network_mode: bridge
+    privileged: false
+    container_name: ""
+    hostname: ""
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+  author: WisdomSky
+  category: LinuxServer.io
+  description:
+    en_us: "Visit homepage: https://hub.docker.com/r/linuxserver/mariadb/"
+  developer: LinuxServer.io
+  hostname: ""
+  icon: https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/mariadb-git.png
+  index: /
+  is_uncontrolled: false
+  main: app
+  port_map: ""
+  project_url: https://mariadb.org/
+  scheme: http
+  store_app_id: linuxserver-mariadb
+  tagline:
+    en_us: One of the most popular database servers. Made by the original developers
+      of MySQL.
+  thumbnail: https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/mariadb-git.png
+  title:
+    custom: ""
+    en_us: NextCloud-Mariadb
