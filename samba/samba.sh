@@ -1,1 +1,1 @@
-echo -e "password#\npassword" | smbpasswd -a -s username
+(echo password; echo password) | smbpasswd -a -s username
