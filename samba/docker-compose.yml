@@ -5,15 +5,15 @@ services:
     container_name: samba
     environment:
       USER: "abc"
-      PASS: "def#"
+      PASS: "def"
       RW: true      # Optional, default true
       UID: 1000    # Optional, default 1000
       GID: 1000    # Optional, default 1000
     ports:
       - 445:445
+      - 139:139
     volumes:
-      - /:/
-      - /home/robin:/home/robin
-    cap_add:
-      - CAP_NET_ADMIN
+      - /home/robinmorajker/smb.conf:/etc/samba/smb.conf
+      - /:/mnt/root
+      - /home/robinmorajker:/home/robinmorajker
     restart: on-failure
