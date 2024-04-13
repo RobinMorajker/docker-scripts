@@ -1,1 +1,1 @@
-echo -e "password#\npassword" | sudo smbpasswd -a -s user
+echo -e "password#\npassword" | smbpasswd -a -s user
