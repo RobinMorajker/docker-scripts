@@ -102,3 +102,6 @@ x-casaos:
     custom: ""
   hostname: ""
   scheme: http
+
+networks:
+  nextcloud_network:
