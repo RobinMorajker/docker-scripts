@@ -62,7 +62,6 @@ services:
     devices: []
     cap_add: []
     command: []
-    network_mode: bridge
     privileged: false
     hostname: nextcloud
     cpu_shares: 90
