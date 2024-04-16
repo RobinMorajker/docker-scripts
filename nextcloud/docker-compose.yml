@@ -30,11 +30,19 @@ services:
       - target: 443
         published: "10443"
         protocol: tcp
+    links:
+      - mysql
     restart: unless-stopped
     volumes:
       - type: bind
         source: /DATA/AppData/nextcloud/var/www/html
         target: /var/www/html
+    environment:
+      MYSQL_ROOT_PASSWORD: nextcloud_password
+      MYSQL_DATABASE: nextcloud_db
+      MYSQL_USER: nextcloud_user
+      MYSQL_PASSWORD: nextcloud_password
+      MYSQL_HOST: db
     x-casaos:
       ports:
         - container: "80"
