@@ -1,5 +1,17 @@
 name: nextcloud
 services:
+  mysql:
+    container_name: mysql
+    image: mysql:8.0.25
+    environment:
+      MYSQL_ROOT_PASSWORD: nextcloud_password
+      MYSQL_DATABASE: nextcloud_db
+      MYSQL_USER: nextcloud_user
+      MYSQL_PASSWORD: nextcloud_password
+    volumes:
+      - /DATA/AppData/mysql:/var/lib/mysql
+    ports:
+      - 3307:3306
   nextcloud:
     container_name: nextcloud
     deploy:
@@ -80,15 +92,3 @@ x-casaos:
     custom: ""
   hostname: ""
   scheme: http
-  mysql:
-    container_name: mysql
-    image: mysql:8.0.25
-    environment:
-      MYSQL_ROOT_PASSWORD: nextcloud_password
-      MYSQL_DATABASE: nextcloud_db
-      MYSQL_USER: nextcloud_user
-      MYSQL_PASSWORD: nextcloud_password
-    volumes:
-      - /DATA/AppData/mysql:/var/lib/mysql
-    ports:
-      - 3307:3306
