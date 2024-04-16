@@ -12,6 +12,8 @@ services:
       - /DATA/AppData/mysql:/var/lib/mysql
     ports:
       - 3307:3306
+    networks:
+      - nextcloud_network
   nextcloud:
     container_name: nextcloud
     deploy:
@@ -30,6 +32,8 @@ services:
       - target: 443
         published: "10443"
         protocol: tcp
+    networks:
+      - nextcloud_network
     links:
       - mysql
     restart: unless-stopped
