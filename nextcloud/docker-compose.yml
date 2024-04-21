@@ -22,7 +22,7 @@ services:
           memory: "536870912"
         limits:
           memory: 8052M
-    image: nextcloud:latest
+    image: arm64v8/nextcloud:latest
     labels:
       icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Nextcloud/icon.png
     ports:
