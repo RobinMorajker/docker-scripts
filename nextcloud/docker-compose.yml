@@ -11,7 +11,7 @@ services:
     volumes:
       - /DATA/AppData/mysql:/var/lib/mysql
     ports:
-      - 3308:3306
+      - 3307:3306
     networks:
       - nextcloud_network
   nextcloud:
@@ -46,7 +46,7 @@ services:
       MYSQL_DATABASE: nextcloud_db
       MYSQL_USER: nextcloud_user
       MYSQL_PASSWORD: nextcloud_password
-      MYSQL_HOST: localhost:3308
+      MYSQL_HOST: localhost:3307
     x-casaos:
       ports:
         - container: "80"
