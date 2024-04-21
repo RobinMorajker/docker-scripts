@@ -1,8 +1,8 @@
 name: nextcloud
 services:
   mysql:
-    container_name: nextcloud-mysql
-    image: arm64v8/mysql
+    container_name: nextcloud-mariadb
+    image: arm64v8/mariadb
     environment:
       MYSQL_ROOT_PASSWORD: nextcloud_password
       MYSQL_DATABASE: nextcloud_db
