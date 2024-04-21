@@ -46,7 +46,7 @@ services:
       MYSQL_DATABASE: nextcloud_db
       MYSQL_USER: nextcloud_user
       MYSQL_PASSWORD: nextcloud_password
-      MYSQL_HOST: db
+      MYSQL_HOST: https://localhost:3307
     x-casaos:
       ports:
         - container: "80"
