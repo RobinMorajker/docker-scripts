@@ -1,19 +1,5 @@
 name: nextcloud
 services:
-  mysql:
-    container_name: nextcloud-mysql
-    image: arm64v8/mysql:latest
-    environment:
-      MYSQL_ROOT_PASSWORD: nextcloud_password
-      MYSQL_DATABASE: nextcloud_db
-      MYSQL_USER: nextcloud_user
-      MYSQL_PASSWORD: nextcloud_password
-    volumes:
-      - /DATA/AppData/mysql:/var/lib/mysql
-    ports:
-      - 3307:3306
-    networks:
-      - nextcloud_network
   nextcloud:
     container_name: nextcloud
     deploy:
