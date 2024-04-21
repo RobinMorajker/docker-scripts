@@ -2,7 +2,7 @@ name: nextcloud
 services:
   mysql:
     container_name: nextcloud-mysql
-    image: arm64v8/mysql
+    image: arm64v8/mysql:latest
     environment:
       MYSQL_ROOT_PASSWORD: nextcloud_password
       MYSQL_DATABASE: nextcloud_db
@@ -46,7 +46,7 @@ services:
       MYSQL_DATABASE: nextcloud_db
       MYSQL_USER: nextcloud_user
       MYSQL_PASSWORD: nextcloud_password
-      MYSQL_HOST: mysql
+      MYSQL_HOST: localhost:3307
     x-casaos:
       ports:
         - container: "80"
