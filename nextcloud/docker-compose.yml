@@ -105,3 +105,4 @@ x-casaos:
 
 networks:
   nextcloud_network:
+    external: true
