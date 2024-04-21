@@ -1,8 +1,8 @@
 name: nextcloud
 services:
   mysql:
-    container_name: nextcloud-mariadb
-    image: arm64v8/mariadb
+    container_name: nextcloud-mysql
+    image: arm64v8/mysql
     environment:
       MYSQL_ROOT_PASSWORD: nextcloud_password
       MYSQL_DATABASE: nextcloud_db
@@ -22,7 +22,7 @@ services:
           memory: "536870912"
         limits:
           memory: 8052M
-    image: nextcloud:27.1.3
+    image: nextcloud:latest
     labels:
       icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Nextcloud/icon.png
     ports:
@@ -46,7 +46,7 @@ services:
       MYSQL_DATABASE: nextcloud_db
       MYSQL_USER: nextcloud_user
       MYSQL_PASSWORD: nextcloud_password
-      MYSQL_HOST: localhost:3307
+      MYSQL_HOST: mysql
     x-casaos:
       ports:
         - container: "80"
