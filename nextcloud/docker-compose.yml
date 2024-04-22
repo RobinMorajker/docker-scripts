@@ -32,7 +32,7 @@ services:
       MYSQL_DATABASE: nextcloud_db
       MYSQL_USER: nextcloud_user
       MYSQL_PASSWORD: nextcloud_password
-      MYSQL_HOST: 192.168.0.253:3307
+      MYSQL_HOST: mysql
   mysql:
     container_name: nextcloud-mysql
     image: arm64v8/mysql:latest
