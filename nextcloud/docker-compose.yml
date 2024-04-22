@@ -28,8 +28,8 @@ services:
         source: /DATA/AppData/nextcloud/var/www/html
         target: /var/www/html
       - type: bind
-        source: /mnt/2.5HDD1-1TB
-        target: /mnt/2.5HDD1-1TB
+        source: /
+        target: /mnt/root
     environment:
       MYSQL_ROOT_PASSWORD: nextcloud_password
       MYSQL_DATABASE: nextcloud_db
