@@ -13,7 +13,7 @@ services:
   postfixadmin:
     depends_on:
       - db
-    image: postfixadmin
+    image: arm64v8/postfixadmin
     ports:
       - 8083:80
     restart: always
