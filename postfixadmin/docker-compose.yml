@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  db:
+    image: arm64v8/mysql
+    restart: always
+    environment:
+      MYSQL_RANDOM_ROOT_PASSWORD: postfixadmin_password
+      MYSQL_DATABASE: postfixadmin_db
+      MYSQL_USER: postfixadmin_user
+      MYSQL_PASSWORD: postfixadmin_password
+
+  postfixadmin:
+    depends_on:
+      - db
+    image: postfixadmin
+    ports:
+      - 8083:80
+    restart: always
+    environment:
+      POSTFIXADMIN_DB_TYPE: mysqli
+      POSTFIXADMIN_DB_HOST: db
+      POSTFIXADMIN_DB_USER: postfixadmin_user
+      POSTFIXADMIN_DB_NAME: postfixadmin_db
+      POSTFIXADMIN_DB_PASSWORD: postfixadmin_password
