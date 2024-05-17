@@ -14,5 +14,4 @@ RUN useradd -m robinmorajker && echo -e 'SmokinMaskRobin3#\nSmokinMaskRobin3#' |
 EXPOSE 139 445
 
 # Start the Samba service
-CMD ["smbd", "-FS"]
-
+CMD service smbd start && service nmbd start && bash
