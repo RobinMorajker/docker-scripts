@@ -1,4 +1,18 @@
-FROM alpine:latest
-COPY create-users.sh ./create-users.sh
-RUN apk update && apk add samba && chmod +x ./create-users.sh
-CMD sh ./create-users.sh && chmod -R 777 /mnt/root && sleep infinity
+# Use an official Ubuntu base image
+FROM ubuntu:latest
+
+# Install samba and samba-common-bin
+RUN apt-get update && apt-get install -y samba samba-common-bin
+
+# Add the Samba configuration
+RUN echo -e "[Main]\npath = /\navailable = yes\nvalid users = @users\nread only = no\nbrowsable = yes\npublic = yes\nwritable = yes" >> /etc/samba/smb.conf
+
+# Create a user and set password for Samba
+RUN useradd -m robinmorajker && echo -e 'SmokinMaskRobin3#\nSmokinMaskRobin3#' | smbpasswd -a -s robinmorajker
+
+# Expose the necessary ports
+EXPOSE 139 445
+
+# Start the Samba service
+CMD ["smbd", "-FS"]
+
