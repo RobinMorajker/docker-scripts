@@ -24,7 +24,7 @@ services:
     restart: unless-stopped
     volumes:
       - type: bind
-        source: ./AppData/portainer
+        source: ./docker-scripts/portainer
         target: /data
       - type: bind
         source: /var/run/docker.sock
