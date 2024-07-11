@@ -1,18 +1,110 @@
-version: '3.8'
-
+name: nextcloud
 services:
-  nextcloud-aio-mastercontainer:
-    image: nextcloud/all-in-one:latest
-    container_name: nextcloud-aio-mastercontainer
-    init: true
-    restart: always
+  nextcloud:
+    container_name: nextcloud
+    deploy:
+      resources:
+        reservations:
+          memory: "536870912"
+        limits:
+          memory: 8052M
+    image: nextcloud:latest
+    labels:
+      icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Nextcloud/icon.png
     ports:
-      - "95:80"
-      - "9595:8080"
-      - "9543:8443"
+      - target: 80
+        published: "10081"
+        protocol: tcp
+      - target: 443
+        published: "10443"
+        protocol: tcp
+    networks:
+      - nextcloud_network
+    links:
+      - mysql
+    restart: unless-stopped
     volumes:
-      - nextcloud_aio_mastercontainer:/mnt/docker-aio-config
-      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - type: bind
+        source: /DATA/AppData/nextcloud/var/www/html
+        target: /var/www/html
+      - type: bind
+        source: /
+        target: /mnt/root
+    environment:
+      MYSQL_ROOT_PASSWORD: nextcloud_password
+      MYSQL_DATABASE: nextcloud_db
+      MYSQL_USER: nextcloud_user
+      MYSQL_PASSWORD: nextcloud_password
+      MYSQL_HOST: mysql
+  mysql:
+    container_name: nextcloud-mysql
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: nextcloud_password
+      MYSQL_DATABASE: nextcloud_db
+      MYSQL_USER: nextcloud_user
+      MYSQL_PASSWORD: nextcloud_password
+    volumes:
+      - /DATA/AppData/mysql:/var/lib/mysql
+    ports:
+      - 3307:3306
+    networks:
+      - nextcloud_network
+    x-casaos:
+      ports:
+        - container: "80"
+          description:
+            en_us: WebUI HTTP Port
+        - container: "443"
+          description:
+            en_us: WebUI HTTPS Port
+      volumes:
+        - container: /var/www/html
+          description:
+            en_us: Nextcloud config directory.
+    devices: []
+    cap_add: []
+    command: []
+    privileged: false
+    hostname: nextcloud
+    cpu_shares: 90
+x-casaos:
+  architectures:
+    - amd64
+    - arm
+    - arm64
+    - "386"
+    - mips64le
+    - ppc64le
+    - s390x
+  author: CasaOS Team
+  category: Cloud
+  description:
+    en_us: Nextcloud puts your data at your fingertips, under your control. Store
+      your documents, calendar, contacts and photos on a server at home, at one
+      of our providers or in a data center you trust.
 
-volumes:
-  nextcloud_aio_mastercontainer:
+  developer: Nextcloud
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Nextcloud/icon.png
+  index: /
+  is_uncontrolled: false
+  main: nextcloud
+  port_map: "10081"
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Nextcloud/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Nextcloud/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Nextcloud/screenshot-3.png
+  store_app_id: nextcloud
+  tagline:
+    en_us: The productivity platform that keeps you in control
+
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Nextcloud/thumbnail.jpg
+  tips: {}
+  title:
+    en_us: Nextcloud
+    custom: ""
+  hostname: ""
+  scheme: http
+
+networks:
+  nextcloud_network:
