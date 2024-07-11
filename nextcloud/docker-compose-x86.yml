@@ -35,17 +35,17 @@ services:
       MYSQL_DATABASE: nextcloud_db
       MYSQL_USER: nextcloud_user
       MYSQL_PASSWORD: nextcloud_password
-      MYSQL_HOST: mysql
-  mysql:
-    container_name: nextcloud-mysql
-    image: mysql:latest
+      MYSQL_HOST: mariadb
+  mariadb:
+    container_name: nextcloud-mariadb
+    image: mariadb:latest
     environment:
       MYSQL_ROOT_PASSWORD: nextcloud_password
       MYSQL_DATABASE: nextcloud_db
       MYSQL_USER: nextcloud_user
       MYSQL_PASSWORD: nextcloud_password
     volumes:
-      - /DATA/AppData/mysql:/var/lib/mysql
+      - /DATA/AppData/mysql:/var/lib/mariadb
     ports:
       - 3307:3306
     networks:
