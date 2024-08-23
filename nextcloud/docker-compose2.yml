@@ -1,0 +1,76 @@
+version: '3'
+
+services:
+  nextcloud:
+    container_name: nextcloud
+    deploy:
+      resources:
+        reservations:
+          memory: "536870912"
+        limits:
+          memory: 8052M
+    image: arm64v8/nextcloud:latest
+    labels:
+      icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Nextcloud/icon.png
+    ports:
+      - target: 80
+        published: "10081"
+        protocol: tcp
+      - target: 443
+        published: "10443"
+        protocol: tcp
+    networks:
+      - nextcloud_network
+    links:
+      - mysql
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /DATA/AppData/nextcloud/var/www/html
+        target: /var/www/html
+      - type: bind
+        source: /
+        target: /mnt/root
+    environment:
+      MYSQL_ROOT_PASSWORD: nextcloud_password
+      MYSQL_DATABASE: nextcloud_db
+      MYSQL_USER: nextcloud_user
+      MYSQL_PASSWORD: nextcloud_password
+      MYSQL_HOST: mysql
+
+  mysql:
+    container_name: nextcloud-mysql
+    image: arm64v8/mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: nextcloud_password
+      MYSQL_DATABASE: nextcloud_db
+      MYSQL_USER: nextcloud_user
+      MYSQL_PASSWORD: nextcloud_password
+    volumes:
+      - /DATA/AppData/mysql:/var/lib/mysql
+    ports:
+      - 3307:3306
+    networks:
+      - nextcloud_network
+    x-casaos:
+      ports:
+        - container: "80"
+          description:
+            en_us: WebUI HTTP Port
+        - container: "443"
+          description:
+            en_us: WebUI HTTPS Port
+      volumes:
+        - container: /var/www/html
+          description:
+            en_us: Nextcloud config directory.
+    devices: []
+    cap_add: []
+    command: []
+    privileged: false
+    hostname: nextcloud
+    cpu_shares: 90
+
+networks:
+  nextcloud_network:
+    name: nextcloud_network
