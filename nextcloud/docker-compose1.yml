@@ -107,4 +107,4 @@ x-casaos:
   scheme: http
 
 networks:
-  network:
+  nextcloud_network:
