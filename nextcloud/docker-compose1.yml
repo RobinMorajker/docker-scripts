@@ -1,4 +1,5 @@
-name: nextcloud
+version: '3'
+
 services:
   nextcloud:
     container_name: nextcloud
@@ -36,6 +37,7 @@ services:
       MYSQL_USER: nextcloud_user
       MYSQL_PASSWORD: nextcloud_password
       MYSQL_HOST: mysql
+
   mysql:
     container_name: nextcloud-mysql
     image: arm64v8/mysql:latest
@@ -68,43 +70,7 @@ services:
     privileged: false
     hostname: nextcloud
     cpu_shares: 90
-x-casaos:
-  architectures:
-    - amd64
-    - arm
-    - arm64
-    - "386"
-    - mips64le
-    - ppc64le
-    - s390x
-  author: CasaOS Team
-  category: Cloud
-  description:
-    en_us: Nextcloud puts your data at your fingertips, under your control. Store
-      your documents, calendar, contacts and photos on a server at home, at one
-      of our providers or in a data center you trust.
-
-  developer: Nextcloud
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Nextcloud/icon.png
-  index: /
-  is_uncontrolled: false
-  main: nextcloud
-  port_map: "10081"
-  screenshot_link:
-    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Nextcloud/screenshot-1.png
-    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Nextcloud/screenshot-2.png
-    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Nextcloud/screenshot-3.png
-  store_app_id: nextcloud
-  tagline:
-    en_us: The productivity platform that keeps you in control
-
-  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Nextcloud/thumbnail.jpg
-  tips: {}
-  title:
-    en_us: Nextcloud
-    custom: ""
-  hostname: ""
-  scheme: http
 
 networks:
   nextcloud_network:
+    name: nextcloud_network
