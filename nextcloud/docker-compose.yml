@@ -108,3 +108,4 @@ x-casaos:
 
 networks:
   nextcloud_network:
+    driver: bridge
