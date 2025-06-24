@@ -1,1 +1,11 @@
+curl -fsSL https://get.casaos.io | sudo bash
+sudo sed -i 's/^port=80$/port=81/' /etc/casaos/gateway.ini
+sudo systemctl restart casaos
+export USER=robinmorajker
+sudo usermod -aG docker $USER && newgrp docker
+sudo systemctl enable docker.service
+sudo systemctl enable containerd.service
+
+
+
 mkdir -p $HOME/anythingllm && touch "$HOME/anythingllm/.env" && docker run  --name anythingllm -d -p 3001:3001 --cap-add SYS_ADMIN -v $HOME/anythingllm:/app/server/storage -v $HOME/anythingllm/.env:/app/server/.env -e STORAGE_DIR="/app/server/storage" mintplexlabs/anythingllm && cd $HOME
