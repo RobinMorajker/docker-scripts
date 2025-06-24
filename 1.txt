@@ -1,0 +1,1 @@
+mkdir -p $HOME/anythingllm && touch "$HOME/anythingllm/.env" && docker run  --name anythingllm -d -p 3001:3001 --cap-add SYS_ADMIN -v $HOME/anythingllm:/app/server/storage -v $HOME/anythingllm/.env:/app/server/.env -e STORAGE_DIR="/app/server/storage" mintplexlabs/anythingllm && cd $HOME
