@@ -1,0 +1,153 @@
+name: big-bear-n8n
+services:
+  app:
+    cpu_shares: 90
+    command: []
+    container_name: n8n
+    depends_on:
+      db-n8n:
+        condition: service_healthy
+        required: true
+    deploy:
+      resources:
+        limits:
+          memory: 8059M
+    environment:
+      - DB_POSTGRESDB_DATABASE=n8n
+      - DB_POSTGRESDB_HOST=db-n8n
+      - DB_POSTGRESDB_PASSWORD=bigbearcasaos
+      - DB_POSTGRESDB_PORT=5432
+      - DB_POSTGRESDB_USER=bigbearcasaos
+      - DB_TYPE=postgresdb
+    hostname: n8n
+    image: n8nio/n8n:1.99.0
+    labels:
+      icon: https://cdn.jsdelivr.net/gh/selfhst/icons/png/n8n.png
+    links:
+      - db-n8n
+    ports:
+      - mode: ingress
+        target: 5678
+        published: "5678"
+        protocol: tcp
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /DATA/AppData/big-bear-n8n/.n8n
+        target: /home/node/.n8n
+        bind:
+          create_host_path: true
+    x-casaos:
+      envs:
+        - container: DB_TYPE
+          description:
+            en_us: "Database type: postgresdb"
+      ports:
+        - container: "5678"
+          description:
+            en_us: "Container Port: 5678"
+      volumes:
+        - container: /home/node/.n8n
+          description:
+            en_us: "Container Path: /home/node/.n8n"
+    devices: []
+    cap_add: []
+    networks:
+      - default
+    privileged: false
+  db-n8n:
+    cpu_shares: 90
+    command: []
+    container_name: db-n8n
+    deploy:
+      resources:
+        limits:
+          memory: 8059M
+    environment:
+      - POSTGRES_DB=n8n
+      - POSTGRES_PASSWORD=bigbearcasaos
+      - POSTGRES_USER=bigbearcasaos
+    hostname: db-n8n
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - pg_isready -h localhost -U bigbearcasaos -d n8n
+      timeout: 5s
+      interval: 5s
+      retries: 10
+    image: postgres:14.2
+    labels:
+      icon: https://cdn.jsdelivr.net/gh/selfhst/icons/png/n8n.png
+    restart: on-failure
+    volumes:
+      - type: bind
+        source: /DATA/AppData/big-bear-n8n/pgdata
+        target: /var/lib/postgresql/data
+        bind:
+          create_host_path: true
+      - type: bind
+        source: /DATA/AppData/big-bear-n8n/db/init-data.sh
+        target: /docker-entrypoint-initdb.d/init-data.sh
+        bind:
+          create_host_path: true
+    x-casaos:
+      envs:
+        - container: POSTGRES_PASSWORD
+          description:
+            en_us: "Database password: bigbearcasaos"
+        - container: POSTGRES_USER
+          description:
+            en_us: "Database user: bigbearcasaos"
+        - container: POSTGRES_DB
+          description:
+            en_us: "Database type: postgresdb"
+      volumes:
+        - container: /var/lib/postgresql/data
+          description:
+            en_us: "Container Path: /var/lib/postgresql/data"
+        - container: /docker-entrypoint-initdb.d/init-data.sh
+          description:
+            en_us: "Container Path: /docker-entrypoint-initdb.d/init-data.sh"
+    ports: []
+    devices: []
+    cap_add: []
+    networks:
+      - default
+    privileged: false
+networks:
+  default:
+    name: big-bear-n8n_default
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+  author: BigBearTechWorld
+  category: BigBearCasaOS
+  description:
+    en_us: Free and open fair-code licensed node based Workflow Automation Tool.
+  developer: n8n
+  hostname: n8nrp5.connecthomenow.com
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons/png/n8n.png
+  index: /
+  is_uncontrolled: true
+  main: app
+  port_map: ""
+  scheme: https
+  store_app_id: big-bear-n8n
+  tagline:
+    en_us: Workflow automation tool
+  thumbnail: ""
+  tips:
+    before_install:
+      en_us: >
+        Run this script:
+
+
+        ```
+
+        bash -c "$(wget -qLO - https://raw.githubusercontent.com/bigbeartechworld/big-bear-scripts/master/generate-n8n-init-data/run.sh)"
+
+        ```
+  title:
+    custom: ""
+    en_us: n8n
