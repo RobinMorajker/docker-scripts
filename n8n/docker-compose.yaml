@@ -20,7 +20,7 @@ services:
       - DB_POSTGRESDB_USER=bigbearcasaos
       - DB_TYPE=postgresdb
     hostname: n8n
-    image: n8nio/n8n:1.99.0
+    image: n8nio/n8n
     labels:
       icon: https://cdn.jsdelivr.net/gh/selfhst/icons/png/n8n.png
     links:
