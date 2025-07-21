@@ -1,19 +1,16 @@
-version: "3"
+version: '3.8'
+
 services:
   samba:
-    image: dockurr/samba
+    image: dperson/samba
     container_name: samba
+    restart: unless-stopped
+    network_mode: host  # Allows Samba to broadcast over local network
     environment:
-      USER: "abc"
-      PASS: "def"
-      RW: true      # Optional, default true
-      UID: 1000    # Optional, default 1000
-      GID: 1000    # Optional, default 1000
-    ports:
-      - 445:445
-      - 139:139
+      - USERID=1000  # Adjust to your user ID
+      - GROUPID=1000 # Adjust to your group ID
     volumes:
-      - /home/robinmorajker/smb.conf:/etc/samba/smb.conf
-      - /:/mnt/root
-      - /home/robinmorajker:/home/robinmorajker
-    restart: on-failure
+      - /:/mount  # Sharing entire filesystem (be cautious!)
+    command: >
+      -u "robinmorajker;a5!" 
+      -s "Main;/mount;yes;no;no;robinmorajker"
