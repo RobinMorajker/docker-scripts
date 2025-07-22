@@ -37,6 +37,11 @@ services:
         target: /home/node/.n8n
         bind:
           create_host_path: true
+      - type: bind
+        source: /
+        target: /mnt/root
+        bind:
+          create_host_path: true
     x-casaos:
       envs:
         - container: DB_TYPE
