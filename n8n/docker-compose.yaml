@@ -37,7 +37,7 @@ services:
     restart: unless-stopped
     volumes:
       - type: bind
-        source: /DATA/AppData/big-bear-n8n/.n8n
+        source: /home/robinmorajker/dockerAppdata/big-bear-n8n/.n8n
         target: /home/node/.n8n
         bind:
           create_host_path: true
@@ -90,12 +90,12 @@ services:
     restart: on-failure
     volumes:
       - type: bind
-        source: /DATA/AppData/big-bear-n8n/pgdata
+        source: /home/robinmorajker/dockerAppdata/big-bear-n8n/pgdata
         target: /var/lib/postgresql/data
         bind:
           create_host_path: true
       - type: bind
-        source: /DATA/AppData/big-bear-n8n/db/init-data.sh
+        source:  /home/robinmorajker/dockerAppdata/big-bear-n8n/db/init-data.sh
         target: /docker-entrypoint-initdb.d/init-data.sh
         bind:
           create_host_path: true
