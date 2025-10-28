@@ -2,7 +2,9 @@ version: '3.9'
 
 services:
   web:
-    image: arm64v8/php:8.2-apache
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: web-apache
     volumes:
       - ./public-html:/var/www/html
@@ -11,18 +13,12 @@ services:
     depends_on:
       - mariadb
       - redis
-    networks:
-      - httpd_php_network
     environment:
       REDIS_HOST: redis
       REDIS_PORT: 6379
-    command: >
-      bash -c "
-        docker-php-ext-install pdo pdo_mysql &&
-        pecl install redis &&
-        docker-php-ext-enable redis &&
-        apache2-foreground
-      "
+    networks:
+      - httpd_php_network
+    restart: unless-stopped
 
   mariadb:
     image: arm64v8/mariadb:11
