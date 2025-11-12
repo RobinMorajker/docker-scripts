@@ -1,0 +1,62 @@
+version: '3.9'
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: web-apache
+    volumes:
+      - ./public-html:/var/www/html
+    ports:
+      - "8083:80"
+    depends_on:
+      - mariadb
+      - redis
+    environment:
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+    networks:
+      - httpd_php_network
+    restart: unless-stopped
+
+  mariadb:
+    image: amd64/mariadb:11-ubi9
+    container_name: mariadb
+    environment:
+      MARIADB_ROOT_PASSWORD: httpd_php_password
+      MARIADB_DATABASE: httpd_php_db
+      MARIADB_USER: httpd_php_user
+      MARIADB_PASSWORD: httpd_php_password
+    volumes:
+      - ./mariadb:/var/lib/mysql
+    ports:
+      - "3309:3306"
+    restart: unless-stopped
+    networks:
+      - httpd_php_network
+
+  phpmyadmin:
+    image: amd64/phpmyadmin
+    container_name: phpmyadmin
+    restart: always
+    depends_on:
+      - mariadb
+    ports:
+      - "8081:80"
+    environment:
+      PMA_HOST: mariadb
+      MYSQL_ROOT_PASSWORD: httpd_php_password
+    networks:
+      - httpd_php_network
+
+  redis:
+    image: arm64v8/redis:8.4-rc1-bookworm
+    container_name: redis
+    restart: always
+    networks:
+      - httpd_php_network
+
+networks:
+  httpd_php_network:
+    driver: bridge
