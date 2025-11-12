@@ -1,4 +1,4 @@
-FROM amd64/php:8.3-rc-apache-bookworm
+FROM php
 
 RUN apt-get update \
     && apt-get install -y \
