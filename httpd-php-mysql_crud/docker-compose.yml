@@ -21,7 +21,7 @@ services:
     restart: unless-stopped
 
   mariadb:
-    image: amd64/mariadb:11-ubi9
+    image: mariadb
     container_name: mariadb
     environment:
       MARIADB_ROOT_PASSWORD: httpd_php_password
@@ -37,7 +37,7 @@ services:
       - httpd_php_network
 
   phpmyadmin:
-    image: amd64/phpmyadmin
+    image: phpmyadmin
     container_name: phpmyadmin
     restart: always
     depends_on:
@@ -51,7 +51,7 @@ services:
       - httpd_php_network
 
   redis:
-    image: arm64v8/redis:8.4-rc1-bookworm
+    image: redis
     container_name: redis
     restart: always
     networks:
