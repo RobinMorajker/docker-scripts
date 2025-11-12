@@ -1,0 +1,16 @@
+FROM amd64/php:8.3-rc-apache-bookworm
+
+RUN apt-get update \
+    && apt-get install -y \
+        libzip-dev \
+        zip \
+    && docker-php-ext-install \
+        pdo \
+        pdo_mysql \
+        zip \
+    && pecl install redis \
+    && docker-php-ext-enable redis \
+    && rm -rf /var/lib/apt/lists/*
+
+# Enable Apache rewrite for frameworks like Laravel/CodeIgniter
+RUN a2enmod rewrite
